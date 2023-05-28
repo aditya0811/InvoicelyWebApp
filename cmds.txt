@@ -1,0 +1,152 @@
+npm set prefix "dell\\AppData\\Roaming\\npm"
+
+
+Things changed
+1) Providing providing_args somewhere https://stackoverflow.com/a/70505629
+2) Added read_only=True in InvoieSerializer
+
+client = serializers.HyperlinkedRelatedField(view_name='client-detail', read_only=True)
+
+
+npm list: to list all package version/package 
+pip3 list: for python package
+
+
+superuser
+invoicely
+invoicely
+invoicely@invoicely.com
+
+3) For any change in model which is nothing but table , we run python manage.py makemigrations, 
+python manage.py migrate
+
+4) A serializer is a file that makes us possible to send data from database, convert to JSON and send it 
+over an api.
+
+5) Create models(may create superuser to add models)->serializer->view->urls then update main app with url 
+in urls.py
+
+6) To create a new webpage after basic integration, create Client.vue file, update in router, 
+the url for the file. After that update the place in where the button is present to link this webpage.
+. Now in order to get data there, add information in script in Client.vue.
+
+REMEMBER IN AXIOS we have backend api like api/v1/clients. However in router, we have frontend api.
+FOR GET
+Client.vue -> router -> check frontend:frontend (a), check url -> add code in script to get data from
+backend using axios -> use the return object client, to show info on webpage frontend (b)
+
+FOR ADD
+Client.vue -> router -> check frontend:frontend (a), check url -> add form to enter fields to
+ show info on webpage frontend (b) - > Use fields coming from form to make post request using axios in script
+
+
+The details can be add at last with complete router link, after adding client in script, 
+otherwise since script is last step, we wont get client. What you can do is put temporary button
+just to test url.
+a) First create a Client.vue, specify template and script. Use something like this to connect to component(i
+guess, it is called that=Client)
+<router-link :to="{ name : 'Client', params: { id:client.id }}" class="button is-light">Details</router-link> 
+Inside script only add return type, which is client json object.
+b) Connect .vue and the script(maybe component name) in the router. Define here the url for this template.
+Handle if the url is dynamic, which is, takes in any parameter or not. In Client case, it takes in id.
+Now hit save, and check if you are going to page or not, with the correct url after clicking Details.
+c) Now to get data from the client from backend we use axios, under export default tag, with mounted lifecycle.
+link mounted to methods. Notice the return type here is client, which json, which we can use in the template.
+MAke sure response.data has same type as this.client.
+
+
+7) We created new app to create team
+It exists inside apps, dont know why, new app is required.
+
+a)cd to invoicely folder->mkdir apps/team -> python manage.py startapp team apps/team
+b) In apps.py have name='apps.team', Add 'apps.team.apps.ClientConfig' to INSTALLED_APPS in settings.py
+c) Add model
+d) python manage.py makemigrations, python manage.py migrate
+e) Register models in admin.py
+from .models import Team
+admin.site.register(Team)
+
+f) Next we can create EditTeam template, keep template basic with only h1 and script having only return.
+<template>
+    <div class="page-edit-team">
+        <div class="columns is-multiline">
+            <div class="column is-12">
+                <h1 class="title">Edit team</h1>
+            </div>
+            
+        </div>
+    </div>
+</template>
+
+<script>
+import axios from 'axios'
+
+export default {
+    name :'EditTeam',
+    data() {
+        return {
+            team : {}
+        }
+    }
+</script>
+
+
+g) Configure above template in router/index.js
+
+import EditTeam from '../views/dashboard/EditTeam.vue'
+
+Under const route
+, 
+  {
+    path: '/dashboard/my-account/edit-team',
+    name: 'EditTeam',
+    component: EditTeam,
+    meta : {
+      requireLogin: true
+    }
+  }
+
+Here we already had MyAccount.vue for /dashboard/my-account/. Hence the idea is to add button for 
+EditTeam.vue page in MyAccount.vue template 
+
+<router-link to = "/dashboard/my-account/edit-team" class="button is-light">Edit team</router-link>
+h) Now we create serializer using model defined.
+g) Now we create view using serializer, here overiide get, create, update methods, and make sure foreign key
+is handled, while creating an object.
+i) Now we will add urls.py file in team app and use viewset created earlier. Post this we will also, update
+main urls.py file to include teams url.
+j) then complete frontend template which is EditTeam, Add from, mounted lifecycle, axios.get/axios.patch.
+Step by step validate/
+
+Making new app for our project
+
+
+8) a)cd to invoicely, do 
+mkdir apps/invoice
+python manage.py startapp invoice apps/invoice
+
+In admin.py register all the models with admin.site.register(Team)
+from .models import Team
+admin.site.register(Team)
+b) After creating models, create dummy data in server/admin 
+c) In the serializer for a model, decide read onyl fields, which will not be input from frontend.
+Other list will fields, which are expected from frontend.
+d) Add get/create/perform methods in viewset using serializer
+e) Add urls.py to app and to the url project 
+f) Create .vue with script -> update this .vue and script in the router.js -> get the to-router button somewhere
+in the template. Test if the page is coming up as expected or not.
+g)Start making changes in .vue script section. Add mounted, methods here, along with api call. 
+
+Important note, if a model attribute is not showing in UI, but the data is returning properly from backend, 
+update your backend, i.e. in serializer check if that attribute is present (2:00:00)  inside fields or not.
+
+
+9) in frontend, to add a dropdown list with options as client in clients
+<div class="select">
+                <select name="client" v-model="invoice.client">
+                    <option value="">- Select client -</option>
+                    <option v-for="client in clients" v-bind:key="client.id" v-bind:value="client" >
+                        {{ client.name }}
+                    </option>
+                </select>
+            </div>

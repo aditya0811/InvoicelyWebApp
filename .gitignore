@@ -1,0 +1,14 @@
+doc3.txt
+doc2.txt
+
+dell/
+invoicely_vue/dell/
+invoicely_vue/node_modules/
+
+
+invoicely_env/Lib/
+invoicely_env/Scripts/
+invoicely_env/pyvenv.cfg
+
+
+InvoicingWebAppWorkspace.code-workspace
