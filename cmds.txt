@@ -6,7 +6,7 @@ Things changed
 2) Added read_only=True in InvoieSerializer
 
 
-
+npm install js-file-download
 npm list: to list all package version/package 
 pip3 list: for python package
 

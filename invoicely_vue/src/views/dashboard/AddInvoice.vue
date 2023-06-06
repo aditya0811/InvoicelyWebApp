@@ -131,8 +131,6 @@ export default {
             })
         },
         updateTotals(changedItem) {
-            //get list of item = 
-            //iterate list of items, f
             let net_amount = 0
             let vat_amount = 0
             let item = this.invoice.items.filter(i=>i.item_num === changedItem.item_num)

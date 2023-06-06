@@ -84,6 +84,7 @@ export default {
                     }
                 })
 
+                // When adding await, will make below axios exeute only when above axios is executed
             axios
                 .get("/api/v1/users/me")
                 .then(response => {

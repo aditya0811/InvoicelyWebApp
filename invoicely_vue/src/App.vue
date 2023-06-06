@@ -46,7 +46,9 @@
   import axios from 'axios'
   export default {
     name:'App',
+    // beforeCreate implies execute this code before loading this page
     beforeCreate() {
+      // initializeStore coming from store/index.js
       this.$store.commit('initializeStore')
       const token =  this.$store.state.token
 
