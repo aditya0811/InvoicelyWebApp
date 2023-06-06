@@ -1,16 +1,17 @@
 npm set prefix "dell\\AppData\\Roaming\\npm"
 
-
+django-admin startproject mysite
 Things changed
 1) Providing providing_args somewhere https://stackoverflow.com/a/70505629
 2) Added read_only=True in InvoieSerializer
 
-client = serializers.HyperlinkedRelatedField(view_name='client-detail', read_only=True)
 
 
 npm list: to list all package version/package 
 pip3 list: for python package
 
+team is just some information about the client, in our project 1 client
+has 1 team
 
 superuser
 invoicely
@@ -111,11 +112,11 @@ EditTeam.vue page in MyAccount.vue template
 
 <router-link to = "/dashboard/my-account/edit-team" class="button is-light">Edit team</router-link>
 h) Now we create serializer using model defined.
-g) Now we create view using serializer, here overiide get, create, update methods, and make sure foreign key
+i) Now we create view using serializer, here overiide get, create, update methods, and make sure foreign key
 is handled, while creating an object.
-i) Now we will add urls.py file in team app and use viewset created earlier. Post this we will also, update
+j) Now we will add urls.py file in team app and use viewset created earlier. Post this we will also, update
 main urls.py file to include teams url.
-j) then complete frontend template which is EditTeam, Add from, mounted lifecycle, axios.get/axios.patch.
+k) then complete frontend template which is EditTeam, Add from, mounted lifecycle, axios.get/axios.patch.
 Step by step validate/
 
 Making new app for our project
@@ -150,3 +151,35 @@ update your backend, i.e. in serializer check if that attribute is present (2:00
                     </option>
                 </select>
             </div>
+
+10) To add invoices to the client, we used components/ItemForm.vue
+Component is nothing but another vue file, which is reusable in other places
+
+11) If we want to use child objects(client) for invoice, then we have to specify
+this accordingly in .vue file.
+
+```
+invoice: {
+                // 
+                client: '',
+                // this is default item
+                items: [
+                    {
+                        item_num:0,
+                        title: '',
+                        unit_price: '',
+                        quantity : 1,
+                        vat_rate: 0,
+                        net_amount: 0
+                    }
+                ],
+                due_days: 14,
+                net_amount: 0,
+                vat_amount: 0,
+                gross_amount: 0
+            },
+            clients: []
+        }
+`` 
+
+12) what is mounted/computed in lifecycle in ItemForm.vue

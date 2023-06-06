@@ -71,6 +71,7 @@ export default {
            item: this.initialItem
         }
     },
+    // Everytime we change values either of vat/quantity/price, gross amount should be computed.
     computed : {
         gross_amount() {
             const unit_price = this.item.unit_price

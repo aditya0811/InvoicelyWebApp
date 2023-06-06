@@ -4,11 +4,13 @@ doc2.txt
 dell/
 invoicely_vue/dell/
 invoicely_vue/node_modules/
-
+invoicely_vue/vueHelp.txt
 
 invoicely_env/Lib/
 invoicely_env/Scripts/
 invoicely_env/pyvenv.cfg
+pythonHelp.txt
+
 
 
 InvoicingWebAppWorkspace.code-workspace

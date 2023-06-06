@@ -85,6 +85,7 @@ export default {
     data() {
         return {
             invoice: {
+                // 
                 client: '',
                 // this is default item
                 items: [

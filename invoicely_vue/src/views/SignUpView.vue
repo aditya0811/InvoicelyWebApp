@@ -53,6 +53,7 @@ export default {
                 password: this.password
             }
 
+            // /users/ This api is defined by djoser, go to base endpoints in its doc
             axios.post("/api/v1/users/", formData)
                 .then(response =>{
                     console.log(response)

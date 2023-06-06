@@ -67,6 +67,7 @@ export default {
                     
                     localStorage.setItem("token", token)
                     console.log(response)
+                    console.log("this is token: " + token)
                     
                 })
                 .catch(error => {
