@@ -19,6 +19,7 @@
                             <th>#</th>
                             <th>Client</th>
                             <th>Amount</th>
+                            <th>Due date</th>
                             <th>Is paid</th>
                             <th></th>
                         </tr>
@@ -28,6 +29,7 @@
                             <td>{{ invoice.invoice_number }}</td>
                             <td>{{ invoice.client_name }}</td>
                             <td>{{ invoice.gross_amount }}</td>
+                            <td>{{ invoice.get_due_date_formatted }}</td>
                             <td>{{ getStatusLabel(invoice) }}</td>
                             <td>
                                 <router-link :to = " { name: 'Invoice', params : { id: invoice.id }}">Details</router-link>
