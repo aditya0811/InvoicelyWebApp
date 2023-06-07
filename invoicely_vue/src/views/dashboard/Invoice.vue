@@ -12,10 +12,10 @@
         <div class="columns is-multiline">
             <div class="column is-12">
                 <h1 class="title">Invoice - {{ invoice.invoice_number }}</h1>
-
-               
-
-                <button @click="getPdf()" class="button is-dark">Download PDF</button>
+                <div class="buttons">
+                    <button @click="getPdf()" class="button is-dark">Download PDF</button>
+                    <button @click="setAsPaid()" class="button is-success" v-if="!invoice.is_paid">Set as paid</button>
+                </div>
             </div>
 
             <!-- mb-4 will provide gap below , and box argument will provide a shadow type box, helps in separating -->
@@ -83,7 +83,8 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from 'axios'
+import { toast } from 'bulma-toast'
 const fileDownload = require('js-file-download')
 
 export default {
@@ -142,6 +143,33 @@ export default {
             const total = item.net_amount + (item.net_amount * (item.vat_rate / 100))
 
             return parseFloat(total).toFixed(2)
+        },
+        async setAsPaid() {
+            this.invoice.is_paid = true
+
+            let items = this.invoice.items
+
+            // Items are read only in the backend, hence we are handling items here, and updating the invoice.
+
+            delete this.invoice['items']
+
+            await axios
+                .patch(`/api/v1/invoices/${this.invoice.id}/`, this.invoice)
+                .then(response => {
+                    toast({
+                        message: 'The changes was saved',
+                        type: 'is-success',
+                        dismissible: true,
+                        pauseOnHover: true,
+                        duration: 2000,
+                        position: 'bottom-right',
+                    })
+                })
+                .catch(error => {
+                    console.log(JSON.stringify(error))
+                })
+            
+            this.invoice.items = items
         }
     }
 }
